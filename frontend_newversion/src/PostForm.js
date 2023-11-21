@@ -1,5 +1,7 @@
+// PostForm.js
 import React, { useState } from 'react';
 import './PostForm.css'; // Asegúrate de importar el archivo CSS correspondiente
+import perfilImage1 from './perfil1.jpg';
 
 const PostForm = ({ onPostSubmit }) => {
   const [text, setText] = useState('');
@@ -30,10 +32,11 @@ const PostForm = ({ onPostSubmit }) => {
       console.error('Error al realizar la solicitud:', error.message);
     }
   };
+
   return (
-    <div className="post-section">
+    <div className="post-form">
       <img
-        src="https://placekitten.com/40/40"
+        src={perfilImage1}
         alt="Profile"
         className="post-section__profileImage"
       />
@@ -41,11 +44,11 @@ const PostForm = ({ onPostSubmit }) => {
         <input
           type="text"
           placeholder="¿En qué estás pensando?"
-          className="post-section__input"
+          className="post-input"
           value={text}
           onChange={handleTextChange}
         />
-        <button type="submit" className="post-section__button">
+        <button type="submit" className="post-button">
           Post
         </button>
       </form>

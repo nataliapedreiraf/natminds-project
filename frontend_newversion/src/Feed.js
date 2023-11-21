@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Feed.css';
 import PostForm from './PostForm';
+import perfilImage1 from './perfil1.jpg';
+import { FaHeart, FaComment } from 'react-icons/fa'; // Importa los íconos de react-icons
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -51,7 +53,7 @@ const Feed = () => {
           <div className="post" key={index}>
             <div className="post-header">
               <img
-                src="https://placekitten.com/40/40"
+                src={perfilImage1}
                 alt="Profile"
                 className="post__profileImage"
               />
@@ -61,6 +63,14 @@ const Feed = () => {
               </div>
             </div>
             <p className="post__text">{post.text}</p>
+            <div className="post-actions">
+              <button className="post-action-button">
+                <FaHeart />
+              </button>
+              <button className="post-action-button">
+                <FaComment />
+              </button>
+            </div>
           </div>
         ))}
       </div>

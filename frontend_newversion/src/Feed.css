@@ -148,6 +148,32 @@
     outline: none;
 }
 
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.post-action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #1da1f2;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    transition: color 0.3s; /* Agrega transición para el cambio de color */
+}
+
+.post-action-button:hover {
+    background: none; /* Agrega esta línea para quitar cualquier cambio de color al pasar el ratón */
+}
+
+.post-action-button:focus {
+    outline: none;
+}
+
 
 
 
