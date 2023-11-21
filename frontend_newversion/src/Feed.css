@@ -1,0 +1,154 @@
+.feed {
+    max-width: 600px;
+    margin: 20px auto;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    -ms-overflow-style: none;
+}
+
+.feed::-webkit-scrollbar {
+    width: 0;
+}
+
+.post-list {
+    overflow-y: hidden;
+}
+
+.app-name {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.app-name__text {
+    font-family: 'PicoBlackAlphabet', sans-serif;
+    font-size: 36px;
+    font-style: italic;
+    color: #1da1f2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    margin-bottom: 0;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+@font-face {
+    font-family: 'PicoBlackAlphabet';
+    src: url('titulo.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.app-name__text:hover {
+    color: #636cc2b0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.feed-header {
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.post-section {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.post-section__profileImage {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.post-list {
+    margin-top: 20px;
+}
+
+.post {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+}
+
+.post__profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post__userInfo {
+    flex-grow: 1;
+}
+
+.post__username {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.post__handle {
+    color: #777;
+}
+
+.post__text {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.post-list {
+    margin-top: 20px;
+}
+
+.post-section__button {
+    background-color: #1da1f2;
+    color: #ffffff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 9999px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.post-section__input {
+    flex-grow: 1;
+    width: 70%;
+    padding: 12px;
+    border: 1px solid #1da1f2;
+    border-radius: 9999px;
+    font-size: 16px;
+    color: #14171a;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.post-action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #1da1f2;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.post-action-button:focus {
+    outline: none;
+}
+
+
+
+
+
