@@ -30,7 +30,7 @@ public class PostController {
 
     // POST
     @PostMapping("/posts")
-    public ResponseEntity<PostDto> createPost(@RequestBody @Valid PostDto postDto){
+    public ResponseEntity<PostDto> createPost(@RequestBody @Valid PostDto postDto) {
         Post post = new Post();
         User user = new User();
         user.setUserId(postDto.getUserId());
@@ -56,7 +56,7 @@ public class PostController {
 
     @DeleteMapping("/posts/{postId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<PostDto> removePost (@PathVariable Long postId){
+    public ResponseEntity<PostDto> removePost(@PathVariable Long postId) {
         postService.removePost((postId));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -69,7 +69,8 @@ public class PostController {
 
             // Verificar si la lista de posts es vacía
             if (userPosts.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Devolver 404 si no hay posts para ese usuario
+                return new ResponseEntity<>(
+                    HttpStatus.NOT_FOUND); // Devolver 404 si no hay posts para ese usuario
             }
 
             // Crear una lista de PostDto para almacenar los resultados
@@ -110,7 +111,8 @@ public class PostController {
 
             // Verificar si la lista de posts es vacía
             if (userPosts.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Devolver 404 si no hay posts para ese usuario
+                return new ResponseEntity<>(
+                    HttpStatus.NOT_FOUND); // Devolver 404 si no hay posts para ese usuario
             }
 
             // Crear una lista de PostDto para almacenar los resultados
@@ -139,8 +141,33 @@ public class PostController {
     }
 
     @GetMapping("/posts/all")
-    public  List<Post> getAllPosts(){
+    public List<Post> getAllPosts() {
         return postService.findAll();
     }
 
+    @GetMapping("/posts/allWithLikeCount")
+    public ResponseEntity<List<PostDto>> getAllPostsWithLikeCount() {
+        try {
+            List<Object[]> postsWithLikeCount = postService.findAllPostsWithLikeCount();
+
+            List<PostDto> postDtos = new ArrayList<>();
+
+            for (Object[] postWithLikeCount : postsWithLikeCount) {
+                Post post = (Post) postWithLikeCount[0];
+                Long likeCount = (Long) postWithLikeCount[1];
+
+                PostDto postDto = new PostDto();
+                postDto.setPostId(post.getPostId());
+                // Otros campos del postDto
+                postDto.setLikeCount(likeCount);
+
+                postDtos.add(postDto);
+            }
+
+            return new ResponseEntity<>(postDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }

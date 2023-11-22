@@ -10,4 +10,5 @@ public interface PostService {
     public void removePost(Long postId);
     List<Post> findByUserUserId(Long userId);
     public List<Post> findAll();
+    List<Object[]> findAllPostsWithLikeCount();
 }

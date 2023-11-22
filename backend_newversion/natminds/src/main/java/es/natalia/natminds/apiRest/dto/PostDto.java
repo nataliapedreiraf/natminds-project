@@ -17,4 +17,7 @@ public class PostDto {
 
     private String text;
 
+    private Long likeCount;
+
+
 }

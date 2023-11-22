@@ -4,6 +4,7 @@ package es.natalia.natminds.model.service;
 import es.natalia.natminds.apiModel.service.PostService;
 
 import es.natalia.natminds.model.model.Post;
+import es.natalia.natminds.model.repository.LikeRepository;
 import es.natalia.natminds.model.repository.PostRepository;
 import es.natalia.natminds.model.model.User;
 import es.natalia.natminds.model.repository.UserRepository;
@@ -22,6 +23,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private LikeRepository likeRepository;
 
     private Post post;
     
@@ -54,5 +58,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> findAll() {return postRepository.findAll();}
+
+    @Override
+    public List<Object[]> findAllPostsWithLikeCount() {
+        return likeRepository.findAllPostsAndLikeCount();
+    }
 
 }
