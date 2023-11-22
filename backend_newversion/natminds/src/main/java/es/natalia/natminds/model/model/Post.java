@@ -3,6 +3,8 @@ package es.natalia.natminds.model.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -20,4 +22,7 @@ public class Post {
 
     @NotBlank
     private String text;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<>();
 }
