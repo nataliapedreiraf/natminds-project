@@ -3,6 +3,7 @@ package es.natalia.natminds.apiRest.rest;
 
 import es.natalia.natminds.apiModel.service.UserService;
 import es.natalia.natminds.model.model.User;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,10 +62,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody @Valid User user) {
+    public ResponseEntity<User> login(HttpSession httpSession, @RequestBody @Valid User user) {
+
         User authenticatedUser = userService.authenticateUser(user.getEmail(), user.getPassword());
 
         if (authenticatedUser != null) {
+            httpSession.setAttribute("userId", authenticatedUser.getUserId());
             return new ResponseEntity<>(authenticatedUser, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

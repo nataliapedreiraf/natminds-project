@@ -4,6 +4,7 @@ import es.natalia.natminds.apiModel.service.PostService;
 import es.natalia.natminds.apiRest.dto.PostDto;
 import es.natalia.natminds.model.model.Post;
 import es.natalia.natminds.model.model.User;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,47 @@ public class PostController {
     @GetMapping("/posts/user/{userId}")
     public ResponseEntity<List<PostDto>> getPostsByUserId(@PathVariable Long userId) {
         try {
+            // Obtener la lista de posts asociados al usuario mediante el userId
+            List<Post> userPosts = postService.findByUserUserId(userId);
+
+            // Verificar si la lista de posts es vacía
+            if (userPosts.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Devolver 404 si no hay posts para ese usuario
+            }
+
+            // Crear una lista de PostDto para almacenar los resultados
+            List<PostDto> postDtos = new ArrayList<>();
+
+            // Convertir cada Post a PostDto y agregarlo a la lista
+            for (Post post : userPosts) {
+                PostDto postDto = new PostDto();
+                postDto.setPostId(post.getPostId());
+
+                // Ajustar el nombre del atributo según la relación en la entidad Post
+                if (post.getUser() != null) {
+                    postDto.setUserId(post.getUser().getUserId());
+                }
+
+                postDto.setText(post.getText());
+                postDtos.add(postDto);
+            }
+
+            // Devolver la lista de PostDto en la respuesta
+            return new ResponseEntity<>(postDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            // Manejar la excepción de manera adecuada (por ejemplo, devolver un error 500)
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/posts/authuser/")
+    public ResponseEntity<List<PostDto>> getPostsByAuthUserId(HttpSession httpSession) {
+        try {
+
+            Long userId = (Long) httpSession.getAttribute("userId");
+            if (userId == null)
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
             // Obtener la lista de posts asociados al usuario mediante el userId
             List<Post> userPosts = postService.findByUserUserId(userId);
 
