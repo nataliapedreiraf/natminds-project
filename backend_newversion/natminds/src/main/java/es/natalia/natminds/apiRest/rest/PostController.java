@@ -2,6 +2,7 @@ package es.natalia.natminds.apiRest.rest;
 
 import es.natalia.natminds.apiModel.service.PostService;
 import es.natalia.natminds.apiRest.dto.PostDto;
+import es.natalia.natminds.apiRest.dto.PostLikesDto;
 import es.natalia.natminds.model.model.Post;
 import es.natalia.natminds.model.model.User;
 import jakarta.servlet.http.HttpSession;
@@ -146,22 +147,22 @@ public class PostController {
     }
 
     @GetMapping("/posts/allWithLikeCount")
-    public ResponseEntity<List<PostDto>> getAllPostsWithLikeCount() {
+    public ResponseEntity<List<PostLikesDto>> getAllPostsWithLikeCount() {
         try {
             List<Object[]> postsWithLikeCount = postService.findAllPostsWithLikeCount();
 
-            List<PostDto> postDtos = new ArrayList<>();
+            List<PostLikesDto> postDtos = new ArrayList<>();
 
             for (Object[] postWithLikeCount : postsWithLikeCount) {
                 Post post = (Post) postWithLikeCount[0];
                 Long likeCount = (Long) postWithLikeCount[1];
 
-                PostDto postDto = new PostDto();
-                postDto.setPostId(post.getPostId());
+                PostLikesDto postLikesDto = new PostLikesDto();
+                postLikesDto.setPostId(post.getPostId());
                 // Otros campos del postDto
-                postDto.setLikeCount(likeCount);
+                postLikesDto.setLikeCount(likeCount);
 
-                postDtos.add(postDto);
+                postDtos.add(postLikesDto);
             }
 
             return new ResponseEntity<>(postDtos, HttpStatus.OK);
@@ -170,4 +171,16 @@ public class PostController {
         }
 
     }
+
+    @GetMapping("/posts/{postId}/likeCount")
+    public ResponseEntity<Long> getLikeCountForPost(@PathVariable Long postId) {
+        try {
+            Long likeCount = postService.getLikeCountForPost(postId);
+            return new ResponseEntity<>(likeCount, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

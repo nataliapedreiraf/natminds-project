@@ -36,4 +36,10 @@ public class LikeServiceImpl implements LikeService {
 
     likeRepository.save(like);
   }
+
+  @Override
+  public Long getLikeCountForPost(Post post) {
+    // Implementa la lógica para contar los likes de un post específico
+    return likeRepository.countByPost(post);
+  }
 }

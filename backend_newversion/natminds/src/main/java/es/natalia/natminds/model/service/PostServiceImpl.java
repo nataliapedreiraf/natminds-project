@@ -1,6 +1,7 @@
 package es.natalia.natminds.model.service;
 
 
+import es.natalia.natminds.apiModel.service.LikeService;
 import es.natalia.natminds.apiModel.service.PostService;
 
 import es.natalia.natminds.model.model.Post;
@@ -8,6 +9,7 @@ import es.natalia.natminds.model.repository.LikeRepository;
 import es.natalia.natminds.model.repository.PostRepository;
 import es.natalia.natminds.model.model.User;
 import es.natalia.natminds.model.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,8 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    LikeService likeService;
 
     @Autowired
     private LikeRepository likeRepository;
@@ -63,5 +67,20 @@ public class PostServiceImpl implements PostService {
     public List<Object[]> findAllPostsWithLikeCount() {
         return likeRepository.findAllPostsAndLikeCount();
     }
+
+    @Override
+    public Long getLikeCountForPost(Long postId) {
+        // Recupera el post por su ID
+        Post post = postRepository.findById(postId).orElse(null);
+
+        if (post != null) {
+            // Obtiene y devuelve la cantidad de likes para ese post
+            return likeService.getLikeCountForPost(post);
+        } else {
+            throw new EntityNotFoundException("Post not found with ID: " + postId);
+        }
+    }
+
+
 
 }

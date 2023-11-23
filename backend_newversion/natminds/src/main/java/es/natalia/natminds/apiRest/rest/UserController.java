@@ -67,9 +67,11 @@ public class UserController {
         User authenticatedUser = userService.authenticateUser(user.getEmail(), user.getPassword());
 
         if (authenticatedUser != null) {
+            System.out.println("User authenticated. User ID: " + authenticatedUser.getUserId());
             httpSession.setAttribute("userId", authenticatedUser.getUserId());
             return new ResponseEntity<>(authenticatedUser, HttpStatus.OK);
         } else {
+            System.out.println("Authentication failed for user with email: " + user.getEmail());
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }

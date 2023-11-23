@@ -11,4 +11,7 @@ public interface PostService {
     List<Post> findByUserUserId(Long userId);
     public List<Post> findAll();
     List<Object[]> findAllPostsWithLikeCount();
+
+    Long getLikeCountForPost(Long postId);
+
 }
