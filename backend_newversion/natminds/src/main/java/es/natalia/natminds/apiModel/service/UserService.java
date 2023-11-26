@@ -1,5 +1,6 @@
 package es.natalia.natminds.apiModel.service;
 
+import es.natalia.natminds.model.model.Post;
 import es.natalia.natminds.model.model.User;
 import java.util.Optional;
 import javax.management.InstanceNotFoundException;
@@ -14,4 +15,10 @@ public interface UserService {
     public List<User> findUsers(String name, String lastName, String userName, String email, String biography);
 
     public User authenticateUser(String email, String password);
+
+    User followUser(Long followerId, Long followingId) throws InstanceNotFoundException;
+
+    User unfollowUser(Long followerId, Long followingId) throws InstanceNotFoundException;
+
+    public List<User> findAll();
 }
