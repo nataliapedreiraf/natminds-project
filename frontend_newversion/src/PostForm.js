@@ -1,11 +1,10 @@
+// PostForm.js
 import React, { useState } from 'react';
-import './PostForm.css';
+import './PostForm.css'; // Asegúrate de importar el archivo CSS correspondiente
 import perfilImage1 from './perfil1.jpg';
-import { useAuth } from './AuthContext';
 
 const PostForm = ({ onPostSubmit }) => {
   const [text, setText] = useState('');
-  const { loggedInUserId } = useAuth();
 
   const handleTextChange = (e) => {
     setText(e.target.value);
@@ -14,27 +13,21 @@ const PostForm = ({ onPostSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Botón clicado');
-
+  
+    // Realizar la solicitud POST al backend
     try {
       const response = await fetch('http://localhost:8080/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          
         },
         body: JSON.stringify({
           text,
-          userId: loggedInUserId,
+          userId: 1, // Reemplaza esto con el ID del usuario actual
         }),
-        credentials: 'include', // Añade esta línea para incluir las credenciales
       });
-
-      if (response.ok) {
-        setText('');
-        onPostSubmit();
-      } else {
-        console.error('Error al enviar el nuevo post:', response.statusText);
-      }
+  
+      // Resto del código...
     } catch (error) {
       console.error('Error al realizar la solicitud:', error.message);
     }

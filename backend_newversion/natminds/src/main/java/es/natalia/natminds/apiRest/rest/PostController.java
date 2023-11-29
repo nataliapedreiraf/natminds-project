@@ -1,7 +1,6 @@
 package es.natalia.natminds.apiRest.rest;
 
 import es.natalia.natminds.apiModel.service.PostService;
-import es.natalia.natminds.apiRest.dto.CreatePostDto;
 import es.natalia.natminds.apiRest.dto.PostDto;
 import es.natalia.natminds.apiRest.dto.PostLikesDto;
 import es.natalia.natminds.model.model.Post;
@@ -10,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
@@ -30,20 +31,12 @@ public class PostController {
 
     // POST
     @PostMapping("/posts")
-    public ResponseEntity<PostDto> createPost(HttpSession httpSession, @RequestBody @Valid CreatePostDto createPostDto) {
-        Long userId = (Long) httpSession.getAttribute("userId");
-
-        if (userId == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        System.out.println("Received DTO: " + createPostDto);
-
+    public ResponseEntity<PostDto> createPost(@RequestBody @Valid PostDto postDto) {
         Post post = new Post();
         User user = new User();
-        user.setUserId(userId);
+        user.setUserId(postDto.getUserId());
         post.setUser(user);
-        post.setText(createPostDto.getText());
+        post.setText(postDto.getText());
 
         postService.createPost(post);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -149,15 +142,17 @@ public class PostController {
     }
 
     @GetMapping("/posts/all")
-    public List<Post> getAllPosts(HttpSession httpSession) {
-        Long userId = (Long) httpSession.getAttribute("userId");
+    public List<PostDto> getAllPosts() {
 
-        if (userId == null) {
-            // Puedes manejar la situación cuando el usuario no está autenticado
-            return new ArrayList<>();
+        List<Post> posts = postService.findAll();
+        List<PostDto> postDtos = new ArrayList<PostDto>();
+
+        for (Post p : posts) {
+            postDtos.add(new PostDto(p.getPostId(), p.getUser().getUserId(),
+                p.getText(), 0L));
         }
 
-        return postService.findAll();
+        return postDtos;
     }
 
     @GetMapping("/posts/allWithLikeCount")

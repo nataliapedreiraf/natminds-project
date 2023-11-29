@@ -4,10 +4,10 @@ package es.natalia.natminds.apiRest.rest;
 import es.natalia.natminds.apiModel.service.UserService;
 import es.natalia.natminds.apiRest.dto.LoginDto;
 import es.natalia.natminds.apiRest.dto.UserDto;
-import es.natalia.natminds.model.model.Post;
 import es.natalia.natminds.model.model.User;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -94,32 +94,33 @@ public class UserController {
         return userDto;
     }
 
-    @PostMapping("/users/{followerId}/follow/{followingId}")
-    public ResponseEntity<Void> followUser(@PathVariable Long followerId, @PathVariable Long followingId, HttpSession httpSession) {
+    @GetMapping("/users/follow/{followingId}")
+    public ResponseEntity<Void> followUser(HttpSession httpSession, @PathVariable Long followingId) {
         try {
             Long loggedInUserId = (Long) httpSession.getAttribute("userId");
+            System.out.println("Está autenticado el usuario: " + loggedInUserId);
 
-            if (loggedInUserId == null || !loggedInUserId.equals(followerId)) {
+            if (loggedInUserId == null) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // No coincide con el usuario autenticado
             }
 
-            userService.followUser(followerId, followingId);
+            userService.followUser(loggedInUserId, followingId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (InstanceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/users/{followerId}/unfollow/{followingId}")
-    public ResponseEntity<Void> unfollowUser(@PathVariable Long followerId, @PathVariable Long followingId, HttpSession httpSession) {
+    @GetMapping("/users/unfollow/{followingId}")
+    public ResponseEntity<Void> unfollowUser(@PathVariable Long followingId, HttpSession httpSession) {
         try {
             Long loggedInUserId = (Long) httpSession.getAttribute("userId");
 
-            if (loggedInUserId == null || !loggedInUserId.equals(followerId)) {
+            if (loggedInUserId == null) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // No coincide con el usuario autenticado
             }
 
-            userService.unfollowUser(followerId, followingId);
+            userService.unfollowUser(loggedInUserId, followingId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (InstanceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -127,7 +128,33 @@ public class UserController {
     }
 
     @GetMapping("/users/all")
-    public List<User> getAllUsers() {
-        return userService.findAll();
+    public List<UserDto> getAllUsers() {
+
+        List<UserDto> usersDtos = new ArrayList<UserDto>();
+        List<User> users = userService.findAll();
+
+        for (User u: users) {
+            usersDtos.add(convertToDTO(u));
+        }
+
+        return usersDtos;
+    }
+
+    @GetMapping("/users/allisfollowing")
+    public List<UserDto> getAllUsersByUserId(HttpSession httpSession) {
+
+        Long userId = (Long) httpSession.getAttribute("userId");
+
+        List<UserDto> usersDtos = new ArrayList<UserDto>();
+        List<User> users = userService.findAll();
+        UserDto userDto;
+
+        for (User u: users) {
+            userDto = convertToDTO(u);
+            userDto.setIsFollowing(u.getFollowers().contains(userService.getUser(userId)));
+            usersDtos.add(userDto);
+        }
+
+        return usersDtos;
     }
 }

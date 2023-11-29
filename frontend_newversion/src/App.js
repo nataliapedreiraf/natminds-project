@@ -4,7 +4,6 @@ import Sidebar from './Sidebar';
 import RightSidebar from './RightSidebar';
 import Feed from './Feed';
 import Login from './login';
-import { AuthProvider } from './AuthContext';  // Importa AuthProvider
 import './App.css';
 import PostForm from './PostForm';
 
@@ -17,19 +16,17 @@ function App() {
   };
 
   return (
-    <AuthProvider>  {/* Agrega el AuthProvider alrededor de tu aplicación */}
-      <div className="app">
-        {!isLoggedIn ? (
-          <Login onLogin={handleLogin} />
-        ) : (
-          <>
-            <Sidebar />
-            <Feed />
-            <RightSidebar />
-          </>
-        )}
-      </div>
-    </AuthProvider>
+    <div className="app">
+      {!isLoggedIn ? (
+        <Login onLogin={handleLogin} />
+      ) : (
+        <>
+          <Sidebar />
+          <Feed />
+          <RightSidebar />
+        </>
+      )}
+    </div>
   );
 }
 

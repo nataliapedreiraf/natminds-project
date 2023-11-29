@@ -9,7 +9,7 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch('http://localhost:8080/posts/all');
+      const response = await fetch('http://localhost:8080/posts/all', { method: 'GET', credentials: 'include'});
       if (response.ok) {
         const postsData = await response.json();
         const postsWithLikes = await Promise.all(
@@ -71,16 +71,18 @@ const Feed = () => {
   useEffect(() => {
     fetchPosts();
 
-    const socket = new WebSocket('ws://localhost:8080/ws');
+    /*const socket = new WebSocket('ws://localhost:8080/');
 
     socket.addEventListener('message', (event) => {
       const newPost = JSON.parse(event.data);
       setPosts((prevPosts) => [newPost, ...prevPosts]);
     });
 
+    
+
     return () => {
-      socket.close();
-    };
+      //socket.close();
+    };*/
   }, []);
 
   const handlePostSubmit = async (newPost) => {

@@ -54,31 +54,27 @@
   margin-right: 10px;
 }
 
-.user-info {
-  display: flex;
-  flex-direction: column;
-}
-
 .user-name {
   font-weight: bold;
-  margin-bottom: 2px; /* Ajusta la separación según sea necesario */
+  margin-bottom: 5px;
+  margin-left: 10px;
 }
 
 .user-handle {
   color: #6b6b6b;
-  margin-bottom: 2px; /* Ajusta la separación según sea necesario */
+  margin-left: 10px;
 }
 
 .follow-button {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #000000; /* Fondo negro */
+  color: #ffffff; /* Color de texto blanco */
   border: none;
   border-radius: 8px;
-  padding: 8px 15px;
+  padding: 5px 10px;
   cursor: pointer;
-  text-align: center;
-  width: 120px;
-  margin-left: auto; /* Esto alinea el botón a la derecha */
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
 }
 
 .show-more {
@@ -109,10 +105,4 @@
   background-color: #000000; /* Fondo negro */
   color: #ffffff; /* Color de texto blanco */
   cursor: pointer;
-}
-
-.show-more:hover,
-.hashtag:hover {
-  background-color: #1da1f2; /* Cambia al color que desees al pasar el mouse */
-  color: #ffffff; /* Cambia al color que desees al pasar el mouse */
 }
