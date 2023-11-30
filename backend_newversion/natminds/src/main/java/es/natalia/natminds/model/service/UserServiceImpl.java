@@ -1,17 +1,16 @@
 package es.natalia.natminds.model.service;
 
-import static es.natalia.natminds.model.repository.UserSpecification.*;
-
-import es.natalia.natminds.apiModel.service.UserService;
 import es.natalia.natminds.model.model.User;
 import es.natalia.natminds.model.repository.UserRepository;
+import es.natalia.natminds.apiModel.service.UserService;
 import jakarta.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
-import javax.management.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import javax.management.InstanceNotFoundException;
+import java.util.List;
+import java.util.Optional;
+import static es.natalia.natminds.model.repository.UserSpecification.*;
 
 @Service
 @Transactional

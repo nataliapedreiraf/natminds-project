@@ -1,5 +1,6 @@
 package es.natalia.natminds.apiModel.service;
 
+import es.natalia.natminds.apiRest.dto.PostDto;
 import es.natalia.natminds.model.model.Post;
 import java.util.List;
 

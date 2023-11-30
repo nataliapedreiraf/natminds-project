@@ -54,27 +54,31 @@
   margin-right: 10px;
 }
 
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
 .user-name {
   font-weight: bold;
-  margin-bottom: 5px;
-  margin-left: 10px;
+  margin-bottom: 2px; /* Ajusta la separación según sea necesario */
 }
 
 .user-handle {
   color: #6b6b6b;
-  margin-left: 10px;
+  margin-bottom: 2px; /* Ajusta la separación según sea necesario */
 }
 
 .follow-button {
-  background-color: #000000; /* Fondo negro */
-  color: #ffffff; /* Color de texto blanco */
+  background-color: #000000;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
-  padding: 5px 10px;
+  padding: 8px 15px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  margin-left: 40px;
+  text-align: center;
+  width: 120px;
+  margin-left: auto; /* Esto alinea el botón a la derecha */
 }
 
 .show-more {
@@ -105,4 +109,10 @@
   background-color: #000000; /* Fondo negro */
   color: #ffffff; /* Color de texto blanco */
   cursor: pointer;
+}
+
+.show-more:hover,
+.hashtag:hover {
+  background-color: #1da1f2; /* Cambia al color que desees al pasar el mouse */
+  color: #ffffff; /* Cambia al color que desees al pasar el mouse */
 }

@@ -3,10 +3,11 @@ package es.natalia.natminds.model.service;
 
 import es.natalia.natminds.apiModel.service.LikeService;
 import es.natalia.natminds.apiModel.service.PostService;
+
 import es.natalia.natminds.model.model.Post;
-import es.natalia.natminds.model.model.User;
 import es.natalia.natminds.model.repository.LikeRepository;
 import es.natalia.natminds.model.repository.PostRepository;
+import es.natalia.natminds.model.model.User;
 import es.natalia.natminds.model.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

@@ -1,6 +1,7 @@
 package es.natalia.natminds.apiModel.service;
 
 import es.natalia.natminds.model.model.Post;
+import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional

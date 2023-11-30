@@ -1,13 +1,11 @@
-// Sidebar.js
 import React from 'react';
 import { FaTwitter, FaHashtag, FaBell, FaEnvelope, FaBookmark, FaListUl, FaUser, FaSearch, FaEllipsisH } from 'react-icons/fa';
 import './Sidebar.css';
 import './Followers.css';
-import './Following.css';
 import Followers from './Followers';
 import Following from './Following';
 
-const Sidebar = () => {
+const Sidebar = ({ userData }) => {
   const handleItemClick = (item) => {
     console.log(`Clic en ${item}`);
   };
@@ -16,20 +14,19 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar__profile">
         <img
-          src="https://placekitten.com/50/50" // URL de la imagen del perfil del usuario
+          src="https://placekitten.com/50/50" // Utiliza la URL de la imagen del perfil del usuario
           alt="Profile"
           className="sidebar__profileImage"
         />
         <div className="sidebar__profileInfo">
-          <p className="sidebar__profileName">Nombre de Usuario</p>
-          <p className="sidebar__profileHandle">@nombreusuario</p>
+          <p className="sidebar__profileName">{userData.name}</p>
+          <p className="sidebar__profileHandle">@{userData.userName}</p>
         </div>
       </div>
       <div className="sidebar__counts">
         <Following onClick={handleItemClick} count={100} />
         <Followers onClick={handleItemClick} count={200} />
       </div>
-      {/* Resto del código... */}
       <div className="sidebar__section">
         <FaUser className="sidebar__icon" />
         <p>Perfil</p>

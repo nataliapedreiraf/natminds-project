@@ -8,13 +8,12 @@ import es.natalia.natminds.model.model.User;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
-import java.util.List;
-import javax.management.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import javax.management.InstanceNotFoundException;
+import java.util.List;
 @CrossOrigin
 @RestController
 public class UserController {
