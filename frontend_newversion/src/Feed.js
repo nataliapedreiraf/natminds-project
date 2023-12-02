@@ -120,8 +120,8 @@ const Feed = () => {
             <div className="post-header">
               <img src={perfilImage1} alt="Profile" className="post__profileImage" />
               <div className="post__userInfo">
-                <p className="post__username">{post.user ? post.user.name : ''}</p>
-                <p className="post__handle">{post.user ? post.user.userName : ''}</p>
+              <p className="post__username">{post.userName}</p>
+              <p className="post__handle">{post.userFullName}</p>
               </div>
             </div>
             <p className="post__text">{post.text}</p>

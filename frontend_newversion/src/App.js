@@ -16,13 +16,19 @@ function App() {
     setUserData(userData);
   };
 
+  const handleLogout = () => {
+    // Lógica para cerrar sesión
+    setLoggedIn(false);
+    setUserData(null);
+  };
+
   return (
     <div className="app">
       {!isLoggedIn ? (
         <Login onLogin={handleLogin} />
       ) : (
         <>
-          <Sidebar userData={userData} />
+          <Sidebar userData={userData} onLogout={handleLogout} />
           <Feed />
           <RightSidebar />
         </>

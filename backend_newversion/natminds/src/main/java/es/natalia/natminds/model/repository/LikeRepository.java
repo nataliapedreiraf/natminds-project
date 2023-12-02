@@ -2,6 +2,7 @@ package es.natalia.natminds.model.repository;
 
 import es.natalia.natminds.model.model.Like;
 import es.natalia.natminds.model.model.Post;
+import es.natalia.natminds.model.model.User;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -13,4 +14,6 @@ public interface LikeRepository extends JpaRepository<Like, Long>, JpaSpecificat
   List<Object[]> findAllPostsAndLikeCount();
 
   Long countByPost(Post post);
+
+  boolean existsByUserAndPost(User user, Post post);
 }

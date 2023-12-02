@@ -23,5 +23,7 @@ public class PostDto {
 
     private Long likeCount;
 
+    private String userName;
+    private String userFullName;
 
 }

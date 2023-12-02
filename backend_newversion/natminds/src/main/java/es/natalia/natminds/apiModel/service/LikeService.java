@@ -9,4 +9,6 @@ public interface LikeService {
   public void likePost(Long userId, Long postId);
 
   Long getLikeCountForPost(Post post);
+
+  public boolean userLikedPost(Long userId, Long postId);
 }

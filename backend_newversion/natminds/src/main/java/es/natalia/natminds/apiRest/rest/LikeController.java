@@ -23,7 +23,7 @@ public class LikeController {
   @Autowired
   PostService postService;
 
-  @PostMapping("/like")
+  /*@PostMapping("/like")
   public ResponseEntity<Long> likePost(HttpSession httpSession, @RequestParam Long postId) {
     Long userId = (Long) httpSession.getAttribute("userId");
 
@@ -35,6 +35,32 @@ public class LikeController {
 
     try {
       likeService.likePost(userId, postId);
+      // Obtener el recuento de likes actualizado después de dar "Me gusta"
+      Long updatedLikesCount = postService.getLikeCountForPost(postId);
+      return ResponseEntity.ok(updatedLikesCount);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }*/
+
+  @PostMapping("/like")
+  public ResponseEntity<Long> likePost(HttpSession httpSession, @RequestParam Long postId) {
+    Long userId = (Long) httpSession.getAttribute("userId");
+
+    System.out.println("User ID from session: " + userId);
+
+    if (userId == null) {
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    try {
+      // Verificar si el usuario ya le dio "Me gusta" al post
+      if (!likeService.userLikedPost(userId, postId)) {
+        // El usuario no le ha dado "Me gusta" al post, procede a darle "Me gusta"
+        likeService.likePost(userId, postId);
+      }
+
       // Obtener el recuento de likes actualizado después de dar "Me gusta"
       Long updatedLikesCount = postService.getLikeCountForPost(postId);
       return ResponseEntity.ok(updatedLikesCount);

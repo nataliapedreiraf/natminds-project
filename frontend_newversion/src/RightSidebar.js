@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaUserPlus } from 'react-icons/fa';
 import './RightSidebar.css';
+import perfilImage1 from './perfil2.jpg';
 
 const RightSidebar = () => {
 
@@ -66,7 +67,7 @@ const RightSidebar = () => {
 
         {usersToFollow.map(user => (
           <div className="user" key={user.userId}>
-            <img src={`https://placekitten.com/50/50?user=${user.userId}`} alt={user.userName} className="user-image" />
+            <img src={`https://placekitten.com/200/300?user=${user.userId}`} alt={user.userName} className="user-image" />
             <div>
               <p className="user-name">{user.name} {user.lastName}</p>
               <p className="user-handle">{user.userName}</p>

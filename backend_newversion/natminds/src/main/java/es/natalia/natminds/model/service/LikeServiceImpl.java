@@ -42,4 +42,16 @@ public class LikeServiceImpl implements LikeService {
     // Implementa la lógica para contar los likes de un post específico
     return likeRepository.countByPost(post);
   }
+
+  public boolean userLikedPost(Long userId, Long postId) {
+    // Obtener el usuario y el post
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Post post = postRepository.findById(postId)
+        .orElseThrow(() -> new RuntimeException("Post not found"));
+
+    // Utilizar el nuevo método en el repositorio
+    return likeRepository.existsByUserAndPost(user, post);
+  }
 }

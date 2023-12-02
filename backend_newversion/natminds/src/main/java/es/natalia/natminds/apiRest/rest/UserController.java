@@ -80,6 +80,29 @@ public class UserController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpSession httpSession) {
+        try {
+            // Obtenemos el ID de usuario antes de invalidar la sesión
+            Long userId = (Long) httpSession.getAttribute("userId");
+
+            // Invalidar la sesión actual
+            httpSession.invalidate();
+
+            // Verificamos si el ID de usuario es nulo (sesión cerrada)
+            if (userId != null) {
+                System.out.println("Sesión cerrada para el usuario con ID: " + userId);
+            } else {
+                System.out.println("Intento de cierre de sesión para una sesión no iniciada");
+            }
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error al cerrar la sesión: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     private UserDto convertToDTO(User user) {
         // Implementa la lógica para convertir User a UserDTO
         UserDto userDto = new UserDto();

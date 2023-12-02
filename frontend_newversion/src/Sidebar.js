@@ -5,9 +5,14 @@ import './Followers.css';
 import Followers from './Followers';
 import Following from './Following';
 
-const Sidebar = ({ userData }) => {
+const Sidebar = ({ userData, onLogout }) => {
   const handleItemClick = (item) => {
     console.log(`Clic en ${item}`);
+  };
+
+  const handleLogout = () => {
+    // Lógica para cerrar sesión
+    onLogout();
   };
 
   return (
@@ -51,7 +56,7 @@ const Sidebar = ({ userData }) => {
         <FaEnvelope className="sidebar__icon" />
         <p>Mensajes</p>
       </div>
-      <div className="sidebar__section">
+      <div className="sidebar__section" onClick={handleLogout}>
         <FaEllipsisH className="sidebar__icon" />
         <p>Cerrar sesión</p>
       </div>

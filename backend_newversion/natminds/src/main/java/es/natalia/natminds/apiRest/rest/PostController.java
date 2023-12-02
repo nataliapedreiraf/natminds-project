@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -141,7 +142,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("/posts/all")
+    /*@GetMapping("/posts/all")
     public List<PostDto> getAllPosts() {
 
         List<Post> posts = postService.findAll();
@@ -150,6 +151,31 @@ public class PostController {
         for (Post p : posts) {
             postDtos.add(new PostDto(p.getPostId(), p.getUser().getUserId(),
                 p.getText(), 0L));
+        }
+
+        return postDtos;
+    }*/
+
+    @GetMapping("/posts/all")
+    public List<PostDto> getAllPosts() {
+        List<Post> posts = postService.findAll();
+        List<PostDto> postDtos = new ArrayList<>();
+
+        for (Post post : posts) {
+            // Carga explícitamente la información del usuario si es necesario
+            if (!Hibernate.isInitialized(post.getUser())) {
+                Hibernate.initialize(post.getUser());
+            }
+
+            User user = post.getUser();
+            postDtos.add(new PostDto(
+                post.getPostId(),
+                user.getUserId(),
+                post.getText(),
+                0L, // Obtén el conteo de likes
+                user.getUserName(),
+                user.getName() + " " + user.getLastName() // Nombre completo del usuario
+            ));
         }
 
         return postDtos;
