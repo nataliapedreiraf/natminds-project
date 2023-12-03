@@ -4,6 +4,7 @@ import './Sidebar.css';
 import './Followers.css';
 import Followers from './Followers';
 import Following from './Following';
+import perfilImage1 from './perfil1.png';
 
 const Sidebar = ({ userData, onLogout }) => {
   const handleItemClick = (item) => {
@@ -19,7 +20,7 @@ const Sidebar = ({ userData, onLogout }) => {
     <div className="sidebar">
       <div className="sidebar__profile">
         <img
-          src="https://placekitten.com/50/50" // Utiliza la URL de la imagen del perfil del usuario
+          src={perfilImage1} 
           alt="Profile"
           className="sidebar__profileImage"
         />

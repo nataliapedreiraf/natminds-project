@@ -1,7 +1,7 @@
 // PostForm.js
 import React, { useState } from 'react';
 import './PostForm.css'; // Asegúrate de importar el archivo CSS correspondiente
-import perfilImage1 from './perfil1.jpg';
+import perfilImage1 from './perfil1.png';
 
 const PostForm = ({ onPostSubmit }) => {
   const [text, setText] = useState('');

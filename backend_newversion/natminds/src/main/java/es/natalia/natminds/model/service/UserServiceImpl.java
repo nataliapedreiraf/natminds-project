@@ -146,5 +146,8 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
+    public List<User> getUsersToFollow(Long currentUserId) {
+        // Lógica para obtener usuarios a seguir excluyendo al usuario actual (currentUserId)
+        return userRepository.findUsersToFollow(currentUserId);
+    }
 }

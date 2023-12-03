@@ -116,3 +116,19 @@
   background-color: #1da1f2; /* Cambia al color que desees al pasar el mouse */
   color: #ffffff; /* Cambia al color que desees al pasar el mouse */
 }
+
+.jump {
+  animation: jumpAnimation 0.5s ease-in-out;
+}
+
+@keyframes jumpAnimation {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}

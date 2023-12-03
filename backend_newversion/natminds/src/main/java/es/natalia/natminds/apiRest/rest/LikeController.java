@@ -3,6 +3,9 @@ package es.natalia.natminds.apiRest.rest;
 import es.natalia.natminds.apiModel.service.PostService;
 import es.natalia.natminds.apiModel.service.LikeService;
 import es.natalia.natminds.model.model.Post;
+import es.natalia.natminds.model.model.User;
+import es.natalia.natminds.model.repository.PostRepository;
+import es.natalia.natminds.model.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,12 @@ public class LikeController {
 
   @Autowired
   private LikeService likeService;
+
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private PostRepository postRepository;
 
   @Autowired
   PostService postService;
@@ -64,6 +73,32 @@ public class LikeController {
       // Obtener el recuento de likes actualizado después de dar "Me gusta"
       Long updatedLikesCount = postService.getLikeCountForPost(postId);
       return ResponseEntity.ok(updatedLikesCount);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @PostMapping("/unlike")
+  public ResponseEntity<String> unlikePost(HttpSession httpSession, @RequestParam Long postId) {
+    Long userId = (Long) httpSession.getAttribute("userId");
+
+    System.out.println("User ID from session: " + userId);
+
+    if (userId == null) {
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    try {
+      // Obtener el usuario y el post (puedes modificar esto según tu implementación)
+      User user = userRepository.findById(userId)
+          .orElseThrow(() -> new RuntimeException("User not found"));
+
+      Post post = postRepository.findById(postId)
+          .orElseThrow(() -> new RuntimeException("Post not found"));
+
+      likeService.unlikePost(user, post);
+      return ResponseEntity.ok("Unliked post successfully");
     } catch (Exception e) {
       e.printStackTrace();
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

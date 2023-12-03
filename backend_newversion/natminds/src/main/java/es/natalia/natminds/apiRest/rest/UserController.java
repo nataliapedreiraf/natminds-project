@@ -8,6 +8,7 @@ import es.natalia.natminds.model.model.User;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -179,5 +180,35 @@ public class UserController {
         }
 
         return usersDtos;
+    }
+
+    @GetMapping("/tofollow")
+    public List<UserDto> getUsersToFollow(HttpSession session) {
+        Long currentUserId = (Long) session.getAttribute("userId");
+
+        // Lógica para obtener usuarios a seguir excluyendo al usuario actual (currentUserId)
+        List<User> usersToFollow = userService.getUsersToFollow(currentUserId);
+
+        // Convertir la lista de entidades User a una lista de UserDto
+        List<UserDto> usersToFollowDto = usersToFollow.stream()
+            .map(user -> {
+                UserDto userDto = new UserDto();
+                userDto.setUserId(user.getUserId());
+                userDto.setName(user.getName());
+                userDto.setLastName(user.getLastName());
+                userDto.setUserName(user.getUserName());
+                userDto.setEmail(user.getEmail());
+                userDto.setBiography(user.getBiography());
+
+                // Lógica para establecer isFollowing según la relación entre usuarios
+                // Puedes ajustar esto según cómo determines si un usuario está siguiendo a otro
+                userDto.setIsFollowing(user.getFollowers().stream()
+                    .anyMatch(follower -> follower.getUserId().equals(currentUserId)));
+
+                return userDto;
+            })
+            .collect(Collectors.toList());
+
+        return usersToFollowDto;
     }
 }

@@ -42,7 +42,7 @@ public class LikeServiceImpl implements LikeService {
     // Implementa la lógica para contar los likes de un post específico
     return likeRepository.countByPost(post);
   }
-
+  @Override
   public boolean userLikedPost(Long userId, Long postId) {
     // Obtener el usuario y el post
     User user = userRepository.findById(userId)
@@ -53,5 +53,11 @@ public class LikeServiceImpl implements LikeService {
 
     // Utilizar el nuevo método en el repositorio
     return likeRepository.existsByUserAndPost(user, post);
+  }
+
+  @Override
+  public void unlikePost(User user, Post post) {
+    // Lógica para eliminar el "Me gusta" del usuario al post
+    likeRepository.deleteByUserAndPost(user, post);
   }
 }

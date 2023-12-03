@@ -1,10 +1,10 @@
+// RightSidebar.js
 import React, { useState, useEffect } from 'react';
 import { FaUserPlus } from 'react-icons/fa';
 import './RightSidebar.css';
-import perfilImage1 from './perfil2.jpg';
+import perfilImage1 from './perfil1.png';
 
 const RightSidebar = () => {
-
   const [usersToFollow, setUsersToFollow] = useState([]);
 
   useEffect(() => {
@@ -13,14 +13,10 @@ const RightSidebar = () => {
       .then(data => setUsersToFollow(data))
       .catch(error => console.error('Error fetching users to follow:', error));
 
-  });
+  }, []);
 
   const handleFollowClick = (user) => {
-  
-    //const method = user.isFollowing ? 'DELETE' : 'GET';
-
     if (!user.isFollowing) {
-
       const url = `http://localhost:8080/users/follow/${user.userId}`;
       const method = 'GET';
 
@@ -33,8 +29,15 @@ const RightSidebar = () => {
           }
         })
         .catch(error => console.error('Error following/unfollowing user:', error));
-    } else {
 
+        // Agrega la clase jump para el efecto de salto
+        document.getElementById(`followButton_${user.userId}`).classList.add('jump');
+
+        // Elimina la clase jump después de 500ms
+        setTimeout(() => {
+          document.getElementById(`followButton_${user.userId}`).classList.remove('jump');
+        }, 500);
+    } else {
       const url = `http://localhost:8080/users/unfollow/${user.userId}`;
       const method = 'GET';
 
@@ -67,12 +70,16 @@ const RightSidebar = () => {
 
         {usersToFollow.map(user => (
           <div className="user" key={user.userId}>
-            <img src={`https://placekitten.com/200/300?user=${user.userId}`} alt={user.userName} className="user-image" />
+            <img src={perfilImage1} alt={user.userName} className="user-image" />
             <div>
               <p className="user-name">{user.name} {user.lastName}</p>
               <p className="user-handle">{user.userName}</p>
             </div>
-            <button className="follow-button" onClick={() => handleFollowClick(user)}>
+            <button
+              id={`followButton_${user.userId}`}
+              className="follow-button"
+              onClick={() => handleFollowClick(user)}
+            >
               <FaUserPlus />
               {user.isFollowing ? 'Unfollow' : 'Follow'}
             </button>

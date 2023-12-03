@@ -22,4 +22,6 @@ public interface UserService {
     public List<User> findAll();
 
     public List<User> findUsersByUserId(Long userId);
+
+    public List<User> getUsersToFollow(Long currentUserId);
 }
