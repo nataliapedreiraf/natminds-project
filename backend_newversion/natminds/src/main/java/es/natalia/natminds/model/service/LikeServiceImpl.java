@@ -34,7 +34,9 @@ public class LikeServiceImpl implements LikeService {
     like.setUser(user);
     like.setPost(post);
 
-    likeRepository.save(like);
+    if (! likeRepository.existsByUserAndPost(user, post)) {
+      likeRepository.save(like);
+    }
   }
 
   @Override

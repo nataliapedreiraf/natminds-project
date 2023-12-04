@@ -32,10 +32,12 @@ public class PostController {
 
     // POST
     @PostMapping("/posts")
-    public ResponseEntity<PostDto> createPost(@RequestBody @Valid PostDto postDto) {
+    public ResponseEntity<PostDto> createPost(@RequestBody @Valid PostDto postDto, HttpSession httpSession) {
         Post post = new Post();
         User user = new User();
-        user.setUserId(postDto.getUserId());
+
+        Long userId = (Long) httpSession.getAttribute("userId");
+        user.setUserId(userId);
         post.setUser(user);
         post.setText(postDto.getText());
 
@@ -219,3 +221,4 @@ public class PostController {
 
 
 }
+

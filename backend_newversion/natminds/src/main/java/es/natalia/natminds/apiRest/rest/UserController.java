@@ -42,7 +42,7 @@ public class UserController {
 
     @PatchMapping("/users/{userId}")
     public ResponseEntity<User> userPartialUpdate(@PathVariable Long userId,
-                                             @RequestBody @Valid User user) throws InstanceNotFoundException {
+                                                  @RequestBody @Valid User user) throws InstanceNotFoundException {
         userService.partialUpdateUser(userId, user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -56,11 +56,11 @@ public class UserController {
 
     @GetMapping("/users/filter")
     public List<User> findUsers(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String biography){
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) String lastName,
+        @RequestParam(required = false) String userName,
+        @RequestParam(required = false) String email,
+        @RequestParam(required = false) String biography){
 
         return  userService.findUsers(name, lastName, userName, email, biography);
     }
@@ -174,9 +174,11 @@ public class UserController {
         UserDto userDto;
 
         for (User u: users) {
-            userDto = convertToDTO(u);
-            userDto.setIsFollowing(u.getFollowers().contains(userService.getUser(userId)));
-            usersDtos.add(userDto);
+            if (u.getUserId() != userId) {
+                userDto = convertToDTO(u);
+                userDto.setIsFollowing(u.getFollowers().contains(userService.getUser(userId)));
+                usersDtos.add(userDto);
+            }
         }
 
         return usersDtos;
