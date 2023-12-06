@@ -1,4 +1,3 @@
-// PostForm.js
 import React, { useState } from 'react';
 import './PostForm.css'; // Asegúrate de importar el archivo CSS correspondiente
 import perfilImage1 from './perfil1.png';
@@ -28,7 +27,13 @@ const PostForm = ({ onPostSubmit }) => {
         }),
       });
   
-      // Resto del código...
+      if (response.ok) {
+        // Limpiar el contenido del cuadro de texto después de enviar el post
+        setText('');
+        // Resto del código...
+      } else {
+        console.error('Error al realizar la solicitud:', response.statusText);
+      }
     } catch (error) {
       console.error('Error al realizar la solicitud:', error.message);
     }

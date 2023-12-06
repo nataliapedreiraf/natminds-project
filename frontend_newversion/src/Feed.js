@@ -16,6 +16,8 @@ const Feed = () => {
     localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
   };
 
+  useEffect(() => {
+
   const fetchPosts = async () => {
     try {
       const response = await fetch('http://localhost:8080/posts/all', { method: 'GET', credentials: 'include' });
@@ -43,6 +45,16 @@ const Feed = () => {
       console.error('Error al realizar la solicitud:', error.message);
     }
   };
+
+  fetchPosts();
+
+  const interval = setInterval(() => {
+    console.log('This will run every second!');
+    fetchPosts();
+  }, 1000);
+
+  console.log("Hi")
+}, []);
 
   const handleLikeClick = async (postId) => {
     try {
@@ -139,9 +151,9 @@ const Feed = () => {
     }
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetchPosts();
-  }, []);
+  }, []);*/
 
   const handlePostSubmit = async (newPost) => {
     try {
