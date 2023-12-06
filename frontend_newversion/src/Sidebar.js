@@ -6,21 +6,25 @@ import Followers from './Followers';
 import Following from './Following';
 import perfilImage1 from './perfil1.png';
 
+// Componente funcional Sidebar que representa la barra lateral izquierda con opciones de navegación y perfil del usuario
 const Sidebar = ({ userData, onLogout }) => {
+  // Función para manejar el clic en un elemento de la barra lateral
   const handleItemClick = (item) => {
     console.log(`Clic en ${item}`);
   };
 
+  // Función para manejar el clic en el botón de cerrar sesión
   const handleLogout = () => {
     // Lógica para cerrar sesión
     onLogout();
   };
 
+  // Renderiza la barra lateral izquierda con opciones de navegación y perfil del usuario
   return (
     <div className="sidebar">
       <div className="sidebar__profile">
         <img
-          src={perfilImage1} 
+          src={perfilImage1}
           alt="Profile"
           className="sidebar__profileImage"
         />
@@ -65,4 +69,5 @@ const Sidebar = ({ userData, onLogout }) => {
   );
 };
 
+// Exporta el componente Sidebar para su uso en otros lugares
 export default Sidebar;

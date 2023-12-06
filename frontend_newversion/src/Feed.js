@@ -5,8 +5,10 @@ import perfilImage1 from './perfil1.png';
 import { FaHeart, FaComment } from 'react-icons/fa';
 
 const Feed = () => {
+  // Estado para almacenar la lista de posts
   const [posts, setPosts] = useState([]);
 
+  // Funciones para gestionar el almacenamiento local de posts que han recibido "Me gusta"
   const getLocalStorageLikedPosts = () => {
     const likedPosts = localStorage.getItem('likedPosts');
     return likedPosts ? JSON.parse(likedPosts) : {};
@@ -16,46 +18,54 @@ const Feed = () => {
     localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
   };
 
+  // Efecto secundario para obtener la lista de posts desde el servidor al montar el componente
   useEffect(() => {
 
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/posts/all', { method: 'GET', credentials: 'include' });
-      if (response.ok) {
-        const postsData = await response.json();
-        const postsWithLikes = await Promise.all(
-          postsData.map(async (post) => {
-            const likesCount = await fetchLikesCount(post.postId);
-            return { ...post, likesCount, userLiked: false };
-          })
-        );
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/posts/all', { method: 'GET', credentials: 'include' });
+        if (response.ok) {
+          const postsData = await response.json();
 
-        const likedPosts = getLocalStorageLikedPosts();
+          // Añade información sobre la cantidad de "Me gusta" y si el usuario actual dio "Me gusta" a cada post
+          const postsWithLikes = await Promise.all(
+            postsData.map(async (post) => {
+              const likesCount = await fetchLikesCount(post.postId);
+              return { ...post, likesCount, userLiked: false };
+            })
+          );
 
-        setPosts(
-          postsWithLikes.map((post) => ({
-            ...post,
-            userLiked: likedPosts[post.postId] || false,
-          })).reverse()
-        );
-      } else {
-        console.error('Error al obtener los posts:', response.statusText);
+          // Obtiene los posts que el usuario actual ya ha marcado como "Me gusta"
+          const likedPosts = getLocalStorageLikedPosts();
+
+          // Actualiza el estado de los posts con la información de "Me gusta"
+          setPosts(
+            postsWithLikes.map((post) => ({
+              ...post,
+              userLiked: likedPosts[post.postId] || false,
+            })).reverse()
+          );
+        } else {
+          console.error('Error al obtener los posts:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error al realizar la solicitud:', error.message);
       }
-    } catch (error) {
-      console.error('Error al realizar la solicitud:', error.message);
-    }
-  };
+    };
 
-  fetchPosts();
-
-  const interval = setInterval(() => {
-    console.log('This will run every second!');
+    // Llama a la función fetchPosts al montar el componente
     fetchPosts();
-  }, 1000);
 
-  console.log("Hi")
-}, []);
+    // Establece un intervalo para refrescar la lista de posts cada segundo
+    const interval = setInterval(() => {
+      console.log('This will run every second!');
+      fetchPosts();
+    }, 1000);
 
+    console.log("Hi")
+  }, []); // El efecto se ejecuta solo al montar el componente
+
+  // Función para manejar el clic en el botón de "Me gusta"
   const handleLikeClick = async (postId) => {
     try {
       const response = await fetch(`http://localhost:8080/likes/like?postId=${postId}`, {
@@ -69,6 +79,7 @@ const Feed = () => {
         // Manejar el caso en que la respuesta del servidor es negativa
         const likesCount = Math.max(0, parseInt(updatedLikesCount));
 
+        // Actualiza el estado de los posts, marca el post actual como "Me gusta" en el almacenamiento local
         setPosts((prevPosts) => {
           const updatedPosts = prevPosts.map((prevPost) =>
             prevPost.postId === postId
@@ -98,6 +109,7 @@ const Feed = () => {
     }
   };
 
+  // Función para manejar el clic en el botón de "No me gusta"
   const handleUnlikeClick = async (postId) => {
     try {
       const response = await fetch(`http://localhost:8080/likes/unlike?postId=${postId}`, {
@@ -106,16 +118,17 @@ const Feed = () => {
       });
 
       if (response.ok) {
+        // Actualiza el estado de los posts, marca el post actual como "No me gusta" en el almacenamiento local
         setPosts((prevPosts) => {
           const updatedPosts = prevPosts.map((prevPost) =>
             prevPost.postId === postId
               ? {
-                  ...prevPost,
-                  likesCount: prevPost.userLiked
-                    ? Math.max(0, parseInt(prevPost.likesCount) - 1)
-                    : parseInt(prevPost.likesCount),
-                  userLiked: false,
-                }
+                ...prevPost,
+                likesCount: prevPost.userLiked
+                  ? Math.max(0, parseInt(prevPost.likesCount) - 1)
+                  : parseInt(prevPost.likesCount),
+                userLiked: false,
+              }
               : prevPost
           );
 
@@ -135,6 +148,7 @@ const Feed = () => {
     }
   };
 
+  // Función para obtener la cantidad de "Me gusta" de un post
   const fetchLikesCount = async (postId) => {
     try {
       const response = await fetch(`http://localhost:8080/posts/${postId}/likeCount`);
@@ -151,10 +165,8 @@ const Feed = () => {
     }
   };
 
-  /*useEffect(() => {
-    fetchPosts();
-  }, []);*/
 
+  // Función para manejar el envío de un nuevo post
   const handlePostSubmit = async (newPost) => {
     try {
       const response = await fetch('http://localhost:8080/posts', {
@@ -167,7 +179,7 @@ const Feed = () => {
       });
 
       if (response.ok) {
-        // No necesitas volver a llamar a fetchPosts aquí, ya que el nuevo post se añadirá en tiempo real
+
       } else {
         console.error('Error al enviar el nuevo post:', response.statusText);
       }
@@ -176,6 +188,7 @@ const Feed = () => {
     }
   };
 
+  // Renderiza la interfaz de Feed
   return (
     <div className="feed">
       <div className="feed-header">
@@ -215,4 +228,5 @@ const Feed = () => {
   );
 };
 
+// Exporta el componente Feed para su uso en otros lugares
 export default Feed;

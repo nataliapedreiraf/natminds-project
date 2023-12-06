@@ -163,11 +163,11 @@
     display: flex;
     align-items: center;
     margin-right: 10px;
-    transition: color 0.3s; /* Agrega transición para el cambio de color */
+    transition: color 0.3s;
 }
 
 .post-action-button:hover {
-    background: none; /* Agrega esta línea para quitar cualquier cambio de color al pasar el ratón */
+    background: none; 
 }
 
 .post-action-button:focus {

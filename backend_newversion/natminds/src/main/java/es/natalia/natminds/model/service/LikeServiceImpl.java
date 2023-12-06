@@ -10,56 +10,76 @@ import es.natalia.natminds.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/** Implementación del servicio de Likes. */
 @Service
 public class LikeServiceImpl implements LikeService {
 
-  @Autowired
-  private LikeRepository likeRepository;
+  @Autowired private LikeRepository likeRepository;
 
-  @Autowired
-  private UserRepository userRepository;
+  @Autowired private UserRepository userRepository;
 
-  @Autowired
-  private PostRepository postRepository;
+  @Autowired private PostRepository postRepository;
 
+  /**
+   * Da un "like" a una publicación.
+   *
+   * @param userId ID del usuario que da el "like".
+   * @param postId ID de la publicación a la que se da el "like".
+   */
   @Override
   public void likePost(Long userId, Long postId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-    Post post = postRepository.findById(postId)
-        .orElseThrow(() -> new RuntimeException("Post not found"));
+    Post post =
+        postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
 
     Like like = new Like();
     like.setUser(user);
     like.setPost(post);
 
-    if (! likeRepository.existsByUserAndPost(user, post)) {
+    if (!likeRepository.existsByUserAndPost(user, post)) {
       likeRepository.save(like);
     }
   }
 
+  /**
+   * Obtiene la cantidad de "likes" para una publicación.
+   *
+   * @param post Publicación.
+   * @return Cantidad de "likes" para la publicación.
+   */
   @Override
   public Long getLikeCountForPost(Post post) {
-    // Implementa la lógica para contar los likes de un post específico
     return likeRepository.countByPost(post);
   }
+
+  /**
+   * Verifica si un usuario dio "like" a una publicación.
+   *
+   * @param userId ID del usuario.
+   * @param postId ID de la publicación.
+   * @return true si el usuario dio "like" a la publicación, false de lo contrario.
+   */
   @Override
   public boolean userLikedPost(Long userId, Long postId) {
-    // Obtener el usuario y el post
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-    Post post = postRepository.findById(postId)
-        .orElseThrow(() -> new RuntimeException("Post not found"));
+    Post post =
+        postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
 
-    // Utilizar el nuevo método en el repositorio
     return likeRepository.existsByUserAndPost(user, post);
   }
 
+  /**
+   * Retira el "like" de un usuario a una publicación.
+   *
+   * @param user Usuario que retira el "like".
+   * @param post Publicación.
+   */
   @Override
   public void unlikePost(User user, Post post) {
-    // Lógica para eliminar el "Me gusta" del usuario al post
     likeRepository.deleteByUserAndPost(user, post);
   }
 }

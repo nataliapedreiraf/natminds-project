@@ -1,11 +1,11 @@
 /* RightSidebar.css */
 .right-sidebar {
-  background-color: #f5f5f5; /* Fondo gris claro */
+  background-color: #f5f5f5;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   box-sizing: border-box;
   border-radius: 15px;
-  color: #14171a; /* Color de texto principal */
+  color: #14171a;
 }
 
 .sidebar-heading {
@@ -13,9 +13,9 @@
   margin-bottom: 10px;
 }
 
-/* Parte 1: Información de Premium */
+
 .premium-section {
-  background-color: #ffffff; /* Fondo blanco */
+  background-color: #ffffff;
   padding: 15px;
   box-sizing: border-box;
   border-radius: 15px;
@@ -23,8 +23,8 @@
 }
 
 .subscribe-button {
-  background-color: #000000; /* Fondo negro */
-  color: #ffffff; /* Color de texto blanco */
+  background-color: #000000;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   padding: 10px;
@@ -32,9 +32,9 @@
   margin-top: 10px;
 }
 
-/* Parte 2: A quien seguir */
+
 .who-to-follow-section {
-  background-color: #ffffff; /* Fondo blanco */
+  background-color: #ffffff;
   padding: 15px;
   box-sizing: border-box;
   border-radius: 15px;
@@ -61,12 +61,12 @@
 
 .user-name {
   font-weight: bold;
-  margin-bottom: 2px; /* Ajusta la separación según sea necesario */
+  margin-bottom: 2px;
 }
 
 .user-handle {
   color: #6b6b6b;
-  margin-bottom: 2px; /* Ajusta la separación según sea necesario */
+  margin-bottom: 2px;
 }
 
 .follow-button {
@@ -78,12 +78,12 @@
   cursor: pointer;
   text-align: center;
   width: 120px;
-  margin-left: auto; /* Esto alinea el botón a la derecha */
+  margin-left: auto;
 }
 
 .show-more {
   cursor: pointer;
-  color: #a7b7d8; /* Color del texto principal */
+  color: #a7b7d8;
   background-color: #000000;
   color: #ffffff;
   border: none;
@@ -94,9 +94,9 @@
   align-items: center;
 }
 
-/* Parte 3: Tendencias */
+
 .trends-section {
-  background-color: #ffffff; /* Fondo blanco */
+  background-color: #ffffff;
   padding: 15px;
   box-sizing: border-box;
   border-radius: 15px;
@@ -106,15 +106,15 @@
   margin-bottom: 10px;
   padding: 8px;
   border-radius: 8px;
-  background-color: #000000; /* Fondo negro */
-  color: #ffffff; /* Color de texto blanco */
+  background-color: #000000;
+  color: #ffffff;
   cursor: pointer;
 }
 
 .show-more:hover,
 .hashtag:hover {
-  background-color: #1da1f2; /* Cambia al color que desees al pasar el mouse */
-  color: #ffffff; /* Cambia al color que desees al pasar el mouse */
+  background-color: #1da1f2;
+  color: #ffffff;
 }
 
 .jump {
@@ -122,12 +122,19 @@
 }
 
 @keyframes jumpAnimation {
-  0%, 20%, 50%, 80%, 100% {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
+
   40% {
     transform: translateY(-15px);
   }
+
   60% {
     transform: translateY(-10px);
   }

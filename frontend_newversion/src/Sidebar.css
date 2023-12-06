@@ -1,11 +1,11 @@
 /* Sidebar.css */
 .sidebar {
-  background-color: #ffffff; /* Fondo blanco */
+  background-color: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   box-sizing: border-box;
   border-radius: 15px;
-  color: #14171a; /* Color de texto principal */
+  color: #14171a;
 }
 
 .sidebar__profile {
@@ -56,13 +56,13 @@
   align-items: center;
   cursor: pointer;
   padding: 10px;
-  border-radius: 9999px; /* Ajusta para hacer los bordes más redondos */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Efecto de transición */
+  border-radius: 9999px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar__icon {
   margin-right: 10px;
-  font-size: 1.5em; /* Ajusta según sea necesario */
+  font-size: 1.5em;
 }
 
 .sidebar__section p {
@@ -70,38 +70,38 @@
 }
 
 .sidebar__section:hover {
-  background-color: #e6f1ff; /* Cambia el color al pasar el mouse */
-  color: #1d2129; /* Cambia el color del texto al pasar el mouse */
+  background-color: #e6f1ff;
+  color: #1d2129;
 }
 
-/* Reglas de medios para hacerlo responsive */
+
 @media screen and (max-width: 600px) {
   .sidebar {
-      padding: 10px;
+    padding: 10px;
   }
 
   .sidebar__profileImage {
-      width: 30px;
-      height: 30px;
-      margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
   }
 
   .sidebar__profileName {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   .sidebar__profileHandle {
-      font-size: 12px;
+    font-size: 12px;
   }
 
   .sidebar__count {
-      margin-right: 10px;
-      font-size: 14px;
+    margin-right: 10px;
+    font-size: 14px;
   }
 
   .sidebar__section {
-      padding: 8px;
-      margin-bottom: 10px;
-      font-size: 14px;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
   }
 }

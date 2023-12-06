@@ -4,10 +4,15 @@ import { FaUserPlus } from 'react-icons/fa';
 import './RightSidebar.css';
 import perfilImage1 from './perfil1.png';
 
+// Componente funcional RightSidebar que representa la barra lateral derecha con información de Premium,
+// sugerencias de usuarios a seguir y tendencias
 const RightSidebar = () => {
+  // Estado para almacenar la lista de usuarios sugeridos para seguir
   const [usersToFollow, setUsersToFollow] = useState([]);
 
+  // Efecto de montaje para obtener la lista de usuarios sugeridos al cargar el componente
   useEffect(() => {
+    // Realizar la solicitud al backend para obtener la lista de usuarios sugeridos
     fetch(`http://localhost:8080/users/allisfollowing`, { credentials: 'include' })
       .then(response => response.json())
       .then(data => setUsersToFollow(data))
@@ -15,14 +20,17 @@ const RightSidebar = () => {
 
   }, []);
 
+  // Función para manejar el clic en el botón de seguir o dejar de seguir a un usuario
   const handleFollowClick = (user) => {
     if (!user.isFollowing) {
+      // Realizar la solicitud al backend para seguir al usuario
       const url = `http://localhost:8080/users/follow/${user.userId}`;
       const method = 'GET';
 
       fetch(url, { method, credentials: 'include' })
         .then(response => {
           if (response.ok) {
+            // Actualizar el estado para reflejar el cambio en el estado de seguimiento del usuario
             setUsersToFollow(prevUsers =>
               prevUsers.map(u => (u.userId === user.userId ? { ...u, isFollowing: !u.isFollowing } : u))
             );
@@ -30,20 +38,22 @@ const RightSidebar = () => {
         })
         .catch(error => console.error('Error following/unfollowing user:', error));
 
-        // Agrega la clase jump para el efecto de salto
-        document.getElementById(`followButton_${user.userId}`).classList.add('jump');
+      // Agrega la clase jump para el efecto de salto
+      document.getElementById(`followButton_${user.userId}`).classList.add('jump');
 
-        // Elimina la clase jump después de 500ms
-        setTimeout(() => {
-          document.getElementById(`followButton_${user.userId}`).classList.remove('jump');
-        }, 500);
+      // Elimina la clase jump después de 500ms
+      setTimeout(() => {
+        document.getElementById(`followButton_${user.userId}`).classList.remove('jump');
+      }, 500);
     } else {
+      // Realizar la solicitud al backend para dejar de seguir al usuario
       const url = `http://localhost:8080/users/unfollow/${user.userId}`;
       const method = 'GET';
 
       fetch(url, { method, credentials: 'include' })
         .then(response => {
           if (response.ok) {
+            // Actualizar el estado para reflejar el cambio en el estado de seguimiento del usuario
             setUsersToFollow(prevUsers =>
               prevUsers.map(u => (u.userId === user.userId ? { ...u, isFollowing: !u.isFollowing } : u))
             );
@@ -53,9 +63,10 @@ const RightSidebar = () => {
     }
   };
 
+  // Renderiza la barra lateral derecha con información de Premium, usuarios sugeridos y tendencias
   return (
     <div className="right-sidebar">
-      {/* Parte 1: Información de Premium */}
+
       <div className="premium-section">
         <h2 className="sidebar-heading">Premium</h2>
         <p>Obtén acceso exclusivo a contenido premium</p>
@@ -64,7 +75,7 @@ const RightSidebar = () => {
 
       <div className="separator"></div>
 
-      {/* Parte 2: A quien seguir */}
+
       <div className="who-to-follow-section">
         <h2 className="sidebar-heading">A quien seguir</h2>
 
@@ -93,7 +104,7 @@ const RightSidebar = () => {
 
       <div className="separator"></div>
 
-      {/* Parte 3: Tendencias */}
+
       <div className="trends-section">
         <h2 className="sidebar-heading">Tendencias</h2>
         <div className="hashtag">#Java</div>
@@ -101,10 +112,11 @@ const RightSidebar = () => {
         <div className="hashtag">#Hibernate</div>
         <div className="hashtag">#React</div>
         <div className="hashtag">#SQL</div>
-        {/* Agrega más tendencias según sea necesario */}
+
       </div>
     </div>
   );
 }
 
+// Exporta el componente RightSidebar para su uso en otros lugares
 export default RightSidebar;

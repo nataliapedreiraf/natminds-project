@@ -7,17 +7,19 @@ import './App.css';
 import PostForm from './PostForm';
 
 function App() {
+  // Estados para controlar el estado de inicio de sesión y los datos del usuario.
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null); // Nuevo estado para almacenar la información del usuario
+  const [userData, setUserData] = useState(null); 
 
+  // Función para manejar el inicio de sesión exitoso.
   const handleLogin = (userData) => {
-    // Usuario autenticado, actualiza el estado para mostrar el Feed y la información del usuario
+  
     setLoggedIn(true);
     setUserData(userData);
   };
 
+  // Función para manejar el cierre de sesión.
   const handleLogout = () => {
-    // Lógica para cerrar sesión
     setLoggedIn(false);
     setUserData(null);
   };

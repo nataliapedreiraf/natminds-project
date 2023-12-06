@@ -38,11 +38,11 @@
 }
 
 .sidebar__followButton {
-  background-color: #000; /* Fondo negro */
-  color: #fff; /* Letra blanca */
+  background-color: #000;
+  color: #fff;
   border: none;
   padding: 8px 12px;
-  border-radius: 9999px; /* Ajusta para hacer los bordes más redondos */
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: bold;
 }

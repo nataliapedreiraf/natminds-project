@@ -3,17 +3,17 @@
   display: block;
   width: 100%;
   padding: 8px 16px;
-  background-color: #000; /* Fondo negro */
-  color: #fff; /* Letra blanca */
+  background-color: #000;
+  color: #fff;
   border: none;
   text-align: left;
   font-size: 14px;
   cursor: pointer;
-  border-radius: 9999px; /* Ajusta para hacer los bordes más redondos */
+  border-radius: 9999px;
   transition: background-color 0.3s;
 }
 
 .sidebar__button:hover {
   background-color: rgba(29, 161, 242, 0.1);
-  color: #1da1f2; /* Cambia el color del texto al pasar el mouse */
+  color: #1da1f2;
 }

@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import './PostForm.css'; // Asegúrate de importar el archivo CSS correspondiente
+import './PostForm.css';
 import perfilImage1 from './perfil1.png';
 
+// Componente funcional PostForm que representa el formulario para crear nuevos posts
 const PostForm = ({ onPostSubmit }) => {
+  // Estado para almacenar el texto del nuevo post
   const [text, setText] = useState('');
 
+  // Función para manejar cambios en el texto del post
   const handleTextChange = (e) => {
     setText(e.target.value);
   };
 
+  // Función para manejar el envío del formulario de nuevo post
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Botón clicado');
-  
+
     // Realizar la solicitud POST al backend
     try {
       const response = await fetch('http://localhost:8080/posts', {
@@ -23,14 +27,14 @@ const PostForm = ({ onPostSubmit }) => {
         },
         body: JSON.stringify({
           text,
-          userId: 1, // Reemplaza esto con el ID del usuario actual
+          userId: 1,
         }),
       });
-  
+
+      // Verificar si la respuesta del servidor es exitosa
       if (response.ok) {
         // Limpiar el contenido del cuadro de texto después de enviar el post
         setText('');
-        // Resto del código...
       } else {
         console.error('Error al realizar la solicitud:', response.statusText);
       }
@@ -39,6 +43,7 @@ const PostForm = ({ onPostSubmit }) => {
     }
   };
 
+  // Renderiza el formulario de nuevo post
   return (
     <div className="post-form">
       <img
@@ -62,4 +67,5 @@ const PostForm = ({ onPostSubmit }) => {
   );
 };
 
+// Exporta el componente PostForm para su uso en otros lugares
 export default PostForm;

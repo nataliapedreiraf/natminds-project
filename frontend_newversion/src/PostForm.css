@@ -7,10 +7,10 @@
 }
 
 .post-input {
-  flex-grow: 1; /* Para que el input ocupe el espacio restante */
-  width: 510px; /* Ajusta el ancho según tus preferencias */
+  flex-grow: 1;
+  width: 510px;
   padding: 10px;
-  margin-right: 10px; /* Agrega un margen derecho entre el input y el botón */
+  margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }

@@ -4,34 +4,28 @@ body {
   box-sizing: border-box;
 }
 
-
-
-/* Ajuste de la barra lateral para que no crezca demasiado */
 .sidebar {
-  flex: 0 0 250px; /* Tamaño fijo de la barra lateral */
+  flex: 0 0 250px; 
 
 }
 
-/* Contenido principal que crecerá para ocupar el espacio restante */
 .main-content {
-  flex: 1; /* El contenido principal ocupará todo el espacio restante */
-  padding: 20px; /* Añadir relleno al contenido principal */
-  max-width: 1200px; /* Establecer un ancho máximo para evitar que el contenido se estire demasiado en pantallas grandes */
+  flex: 1; 
+  padding: 20px; 
+  max-width: 1200px; 
 }
 
 .app {
   display: flex;
   height: 100vh;
-  overflow: hidden; /* Evita el desplazamiento en el body */
+  overflow: hidden; 
 }
 
-/* SidebarLeft.css y RightSidebar.css (ajusta según sea necesario) */
 .sidebar {
-  height: 100vh; /* Establece la altura completa del viewport para hacerlo estático */
+  height: 100vh; 
 }
 
-/* Feed.css */
 .feed {
-  flex-grow: 1; /* Ocupa el espacio restante entre las barras laterales */
-  overflow-y: auto; /* Agrega un desplazamiento vertical solo al feed */
+  flex-grow: 1; 
+  overflow-y: auto; 
 }
